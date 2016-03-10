@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for crazyarrow/manager/SystemManager.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">crazyarrow/manager/</a> SystemManager.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75.12% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>154/205</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">58.4% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>73/125</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">59.52% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>25/42</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75.12% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>154/205</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">27 statements, 7 functions, 22 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">87×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+const __ = require('../libs/global_function'),
+    events = require('events'),
+    path = require('path'),
+    _ = require('lodash'),
+    Promise = require('bluebird'),
+    Database = require("../libs/database"),
+    actionByAttribute = require('./handleAttribute/handleFunction'),
+    ViewEngine = require("../libs/ViewEngine");
+&nbsp;
+/**
+ * Class is base class for FeatureManager, ThemeManager...
+ */
+class SystemManager extends events.EventEmitter {
+    constructor(app, name) {
+        super();
+        this.pub = app.redisClient;
+        this.sub = app.redisSubscriber();
+        this._app = app;
+        //this._config = app._config;
+        this.name = name;
+        this.viewEngine = null;
+        let self = this;
+        let updateKey = app._config.redis_event['update_' + self.name] || ('update_' + self.name);
+        this.sub.subscribe(app._config.redis_prefix + updateKey);
+&nbsp;
+        this.sub.on("message", <span class="fstat-no" title="function not covered" >function (demo) {</span>
+<span class="cstat-no" title="statement not covered" >            self.getCache();</span>
+        });
+    }
+&nbsp;
+    /**
+     * Get all feature config from cache (Redis)
+     * @returns {Promise.&lt;T&gt;}
+     */
+    getCache() {
+        let self = this;
+        /* istanbul ignore next */
+        return this.pub.getAsync(self._app._config.redis_prefix + self._app._config.redis_key[self.name] || <span class="branch-1 cbranch-skip" title="branch not covered" >self.name)</span>
+            .then(function (data) {
+                <span class="skip-if-branch" title="else path not taken" >E</span>if (data) {
+                    let cache = JSON.parse(data);
+                    _.assign(self["_" + self.name], cache);
+                }
+                return (self["_" + self.name]);
+            }.bind(this))
+            .catch(<span class="fstat-skip" title="function not covered" >function (err) {</span>
+<span class="cstat-skip" title="statement not covered" >                log(self.name + " Manager Class: ", err);</span>
+<span class="cstat-skip" title="statement not covered" >                return err</span>
+            }.bind(this));
+    }
+&nbsp;
+    /**
+     * Set all feature config to cache
+     */
+    setCache<span class="fstat-no" title="function not covered" >() {</span>
+<span class="cstat-no" title="statement not covered" >        let self = this;</span>
+        /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >        if (self["_" + self.name]) {</span>
+<span class="cstat-skip" title="statement not covered" >            let data = getInfo(self["_" + self.name]);</span>
+<span class="cstat-skip" title="statement not covered" >            return this.pub.setAsync(self._app._config.redis_prefix + self._app._config.redis_key[self.name] || self.name, JSON.stringify(data));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            return this.pub.setAsync(self._app._config.redis_prefix + self._app._config.redis_key[self.name] || self.name, null);</span>
+        }
+    }
+&nbsp;
+    /**
+     * Get data from cache and sync cluster
+     */
+    reload<span class="fstat-no" title="function not covered" >() {</span>
+<span class="cstat-no" title="statement not covered" >        let self = this;</span>
+<span class="cstat-no" title="statement not covered" >        return self.getCache().then(<span class="fstat-no" title="function not covered" >function (a) {</span></span>
+<span class="cstat-no" title="statement not covered" >            let name = self.name;</span>
+<span class="cstat-no" title="statement not covered" >            let updateKey = self._app._config.redis_event['update_' + self.name] || ('update_' + self.name);</span>
+<span class="cstat-no" title="statement not covered" >            return self.pub.publishAsync(self._app._config.redis_prefix + updateKey, "update " + name)</span>
+        })
+    }
+&nbsp;
+    /**
+     * ArrowApplication use singleton events
+     * @param events
+     */
+    eventHook(events) {
+        this._events = events._events
+    }
+&nbsp;
+    /**
+     * Load views, controllers and models of a feature
+     */
+    loadComponents() {
+        let self = this;
+        //See /config/structure.js and /lib/buildStructure.js
+        let struc = self._app.structure[self.name];
+        let _base = self._app.arrFolder;
+        let privateName = "_" + self.name;
+        let components = {};
+        let _app = this._app;
+        let paths = {};
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (struc.type === "single") {
+            Object.keys(struc.path).map(function (id) {
+                struc.path[id].path.map(function (globMaker) {
+                    let componentGlobLink = path.normalize(_base + globMaker(self._app._config));
+                    let listComponents = __.getGlobbedFiles(componentGlobLink);
+                    let componentFolder;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (componentGlobLink.indexOf('*') &gt; -1) {
+                        componentFolder = componentGlobLink.slice(0, componentGlobLink.indexOf('*'));
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        componentFolder = path.dirname(componentGlobLink)</span>
+                    }
+&nbsp;
+                    listComponents.forEach(function (link) {
+                        let nodeList = path.relative(componentGlobLink, link).split(path.sep).filter(function (node) {
+                            return (node !== "..")
+                        });
+                        let componentConfigFunction = require(link);
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof componentConfigFunction === "object") {
+                            let componentName = componentConfigFunction.name || nodeList[0] || <span class="branch-2 cbranch-no" title="branch not covered" >self.name;</span>
+                            paths[componentName] = paths[componentName] || {};
+                            paths[componentName].configFile = link;
+                            paths[componentName].path = componentFolder + nodeList[0];
+                            paths[componentName].strucID = id;
+                            paths[componentName].name = componentName;
+                        }
+                    });
+                });
+            })
+        }
+        Object.keys(paths).map(function (name) {
+            let id = paths[name].strucID;
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (id) {
+                components[name] = {};
+                components[name].name = paths[name].name;
+                components[name]._path = paths[name].path;
+                components[name]._configFile = paths[name].configFile;
+                components[name]._strucID = id;
+                components[name]._structure = struc.path[id] || <span class="branch-1 cbranch-no" title="branch not covered" >struc;</span>
+                components[name].controllers = Object.create(null);
+                components[name].routes = Object.create(null);
+                components[name].models = Object.create(null);
+                components[name].views = [];
+                components[name].actions = Object.create(null);
+                let componentConfig = require(paths[name].configFile);
+                _.assign(components[name], componentConfig);
+&nbsp;
+                //Logic make order to loading
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (components[name]._structure.path) {
+                    let data = actionByAttribute("path", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.extend) {
+                    let data = actionByAttribute("extend", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.model) {
+                    let data = actionByAttribute("model", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.action) {
+                    let data = actionByAttribute("action", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.controller) {
+                    let data = actionByAttribute("controller", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.view) {
+                    let data = actionByAttribute("view", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                if (components[name]._structure.route) {
+                    let data = actionByAttribute("route", components[name], paths[name].path, _app);
+                    _.assign(components[name], data);
+                }
+&nbsp;
+                Object.keys(components[name]._structure).map(function (attribute) {
+                    if (["controller", "view", "path", "action", "model", "extends", "route"].indexOf(attribute) === -1) {
+                        let data = actionByAttribute(attribute, components[name], paths[name].path, _app);
+                        _.assign(components[name], data);
+                    }
+                });
+            }
+        });
+        //handle Database
+        let defaultDatabase = {};
+        /* istanbul ignore next */
+        let defaultQueryResolve = <span class="fstat-skip" title="function not covered" >function () {</span>
+<span class="cstat-skip" title="statement not covered" >            return new Promise(<span class="fstat-skip" title="function not covered" >function (fulfill, reject) {</span></span>
+<span class="cstat-skip" title="statement not covered" >                fulfill("No models")</span>
+            })
+        };
+        Object.keys(components).map(function (key) {
+            /* istanbul ignore else */
+            <span class="skip-if-branch" title="else path not taken" >E</span>if (Object.keys(components[key].models).length &gt; 0) {
+                /* istanbul ignore else */
+                <span class="skip-if-branch" title="else path not taken" >E</span>if (_.isEmpty(defaultDatabase)) {
+                    defaultDatabase = Database(_app);
+                }
+            }
+            components[key].models.rawQuery = defaultDatabase.query ? defaultDatabase.query.bind(defaultDatabase) : <span class="branch-1 cbranch-no" title="branch not covered" >defaultQueryResolve;</span>
+        });
+&nbsp;
+        let featureViewEngine = this.viewEngine;
+        let viewEngineSetting = _.assign(_app._config.nunjuckSettings || <span class="branch-1 cbranch-no" title="branch not covered" >{},</span> {express: _app._expressApplication});
+        Object.keys(components).map(function (key) {
+            if (!_.isEmpty(components[key].views)) {
+                featureViewEngine = featureViewEngine || ViewEngine(_base, viewEngineSetting, _app);
+            }
+            if (_.isArray(components[key].views)) {
+                components[key].render = Promise.promisify(makeRender(featureViewEngine, components[key].views, key, _app));
+                components[key].viewEngine = featureViewEngine
+            } else {
+                Object.keys(components[key].views).map(function (second_key) {
+                    components[key][second_key] = components[key][second_key] || {};
+                    components[key][second_key].render = Promise.promisify(makeRender(featureViewEngine, components[key][second_key].views, key, _app));
+                    components[key][second_key].viewEngine = featureViewEngine
+&nbsp;
+                })
+            }
+        });
+        this[privateName] = components;
+&nbsp;
+    }
+&nbsp;
+    /**
+     * Get permission of one feature or all feature
+     * @param name
+     * @returns {{}}
+     */
+&nbsp;
+    getPermissions(name) {
+        let self = this;
+        let privateName = "_" + self.name;
+        let result = {};
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (name) {
+<span class="cstat-no" title="statement not covered" >            if (self[privateName] &amp;&amp; self[privateName][name] &amp;&amp; self[privateName][name].permissions) {</span>
+<span class="cstat-no" title="statement not covered" >                result.name = self[privateName][name].permissions || [];</span>
+<span class="cstat-no" title="statement not covered" >                return result</span>
+            }
+        } else {
+            Object.keys(self[privateName]).map(function (componentName) {
+                result[componentName] = self[privateName][componentName].permissions || <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
+            })
+        }
+        return result
+    }
+&nbsp;
+    /**
+     * Get feature attribute
+     * @param attributeName
+     * @returns {{}}
+     */
+&nbsp;
+    getAttribute<span class="fstat-no" title="function not covered" >(attributeName) {</span>
+<span class="cstat-no" title="statement not covered" >        let self = this;</span>
+<span class="cstat-no" title="statement not covered" >        let privateName = "_" + self.name;</span>
+<span class="cstat-no" title="statement not covered" >        let result = {};</span>
+<span class="cstat-no" title="statement not covered" >        if (attributeName &amp;&amp; _.isString(attributeName) &amp;&amp; self[privateName]) {</span>
+<span class="cstat-no" title="statement not covered" >            Object.keys(self[privateName]).map(<span class="fstat-no" title="function not covered" >function (componentName) {</span></span>
+<span class="cstat-no" title="statement not covered" >                if (self[privateName][componentName] &amp;&amp; self[privateName][componentName][attributeName]) {</span>
+<span class="cstat-no" title="statement not covered" >                    result[componentName] = self[privateName][componentName][attributeName];</span>
+                }
+            });
+        } else {
+<span class="cstat-no" title="statement not covered" >            Object.keys(self[privateName]).map(<span class="fstat-no" title="function not covered" >function (componentName) {</span></span>
+<span class="cstat-no" title="statement not covered" >                Object.keys(self[privateName][componentName]).map(<span class="fstat-no" title="function not covered" >function (attributeKey) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (attributeKey[0] !== "_" &amp;&amp; ["controllers", "views", "models", "action", "routes", "viewEngine"].indexOf(attributeKey) === -1 &amp;&amp; !_.isFunction(self[privateName][componentName][attributeKey])) {</span>
+<span class="cstat-no" title="statement not covered" >                        result[componentName] = result[componentName] || {};</span>
+<span class="cstat-no" title="statement not covered" >                        result[componentName][attributeKey] = self[privateName][componentName][attributeKey]</span>
+                    }
+                });
+            });
+        }
+<span class="cstat-no" title="statement not covered" >        return result</span>
+    }
+&nbsp;
+    /**
+     * @param componentName
+     * @param name : declare in structure.js
+     * @returns {Array}
+     */
+    getViewFiles(componentName, name) {
+        let self = this;
+        let privateName = "_" + self.name;
+        /* istanbul ignore next */
+        let extension = self._app._config.viewExtension || <span class="branch-1 cbranch-skip" title="branch not covered" >"html";</span>
+        let pathFolder = [];
+        let result = [];
+        /* istanbul ignore else */
+        <span class="skip-if-branch" title="else path not taken" >E</span>if (componentName &amp;&amp; self[privateName][componentName]) {
+            /* istanbul ignore if */
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (name) {
+                <span class="skip-if-branch" title="if path not taken" >I</span>if (self[privateName][componentName][name] &amp;&amp; self[privateName][componentName][name].views) {
+<span class="cstat-skip" title="statement not covered" >                    self[privateName][componentName][name].views.map(<span class="fstat-skip" title="function not covered" >function (obj) {</span></span>
+<span class="cstat-skip" title="statement not covered" >                        let miniPath = handleView(obj, self, componentName);</span>
+<span class="cstat-skip" title="statement not covered" >                        pathFolder.push(miniPath);</span>
+                    })
+                }
+            } else {
+<span class="cstat-no" title="statement not covered" >                if (_.isArray(self[privateName][componentName].views)) {</span>
+<span class="cstat-no" title="statement not covered" >                    self[privateName][componentName].views.map(<span class="fstat-no" title="function not covered" >function (obj) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        let miniPath = handleView(obj, self, componentName);</span>
+<span class="cstat-no" title="statement not covered" >                        pathFolder.push(miniPath);</span>
+                    })
+                } else {
+<span class="cstat-no" title="statement not covered" >                    Object.keys(self[privateName][componentName].views).map(<span class="fstat-no" title="function not covered" >function (key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        self[privateName][componentName].views[key].map(<span class="fstat-no" title="function not covered" >function (obj) {</span></span>
+<span class="cstat-no" title="statement not covered" >                            let miniPath = handleView(obj, self, componentName);</span>
+<span class="cstat-no" title="statement not covered" >                            pathFolder.push(miniPath);</span>
+                        })
+                    });
+                }
+            }
+        }
+        /* istanbul ignore else */
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!_.isEmpty(pathFolder)) {
+<span class="cstat-no" title="statement not covered" >            pathFolder.map(<span class="fstat-no" title="function not covered" >function (link) {</span></span>
+                /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >                __.getGlobbedFiles(link + "*." + extension).map(<span class="fstat-skip" title="function not covered" >function (result_link) {</span></span>
+<span class="cstat-skip" title="statement not covered" >                    result.push(result_link)</span>
+                })
+            })
+        }
+        return result
+    }
+&nbsp;
+    /**
+     *
+     * @param componentName
+     * @returns {*}
+     */
+    getComponent<span class="fstat-no" title="function not covered" >(componentName) {</span>
+<span class="cstat-no" title="statement not covered" >        let self = this;</span>
+<span class="cstat-no" title="statement not covered" >        let privateName = "_" + self.name;</span>
+<span class="cstat-no" title="statement not covered" >        return self[privateName][componentName];</span>
+    }
+}
+/**
+ *
+ * @param obj
+ * @param application
+ * @param componentName
+ * @returns {*}
+ */
+<span class="fstat-no" title="function not covered" >function handleView(obj, application, componentName) {</span>
+<span class="cstat-no" title="statement not covered" >    let miniPath = obj.func(application._config, componentName);</span>
+<span class="cstat-no" title="statement not covered" >    let normalizePath;</span>
+    /* istanbul ignore if */
+<span class="cstat-no" title="statement not covered" >    if (miniPath[0] === path.sep) {</span>
+<span class="cstat-skip" title="statement not covered" >        normalizePath = path.normalize(obj.base + path.sep + miniPath);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        normalizePath = path.normalize(obj.fatherBase + path.sep + miniPath)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return normalizePath</span>
+}
+&nbsp;
+/**
+ *
+ * @param viewEngine : manager view engine
+ * @param componentView : view folder
+ * @param componentName :
+ * @returns {Function}
+ */
+&nbsp;
+function makeRender(viewEngine, componentView, componentName, application) {
+    /* istanbul ignore next */
+    return <span class="fstat-skip" title="function not covered" >function (view, options, callback) {</span>
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >        var done = callback;</span>
+<span class="cstat-skip" title="statement not covered" >        var opts = options || {};</span>
+&nbsp;
+&nbsp;
+        // support callback function as second arg
+<span class="cstat-skip" title="statement not covered" >        if (typeof options === 'function') {</span>
+<span class="cstat-skip" title="statement not covered" >            done = options;</span>
+<span class="cstat-skip" title="statement not covered" >            opts = {};</span>
+        }
+<span class="cstat-skip" title="statement not covered" >        if (application._config.viewExtension &amp;&amp; view.indexOf(application._config.viewExtension) === -1) {</span>
+<span class="cstat-skip" title="statement not covered" >            view += "." + application._config.viewExtension;</span>
+        }
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >        viewEngine.loaders[0].pathsToNames = {};</span>
+<span class="cstat-skip" title="statement not covered" >        viewEngine.loaders[0].cache = {};</span>
+<span class="cstat-skip" title="statement not covered" >        viewEngine.loaders[0].searchPaths = componentView.map(<span class="fstat-skip" title="function not covered" >function (obj) {</span></span>
+<span class="cstat-skip" title="statement not covered" >            return handleView(obj, application, componentName);</span>
+        });
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >        viewEngine.render(view, opts, done);</span>
+    };
+}
+&nbsp;
+/**
+ *
+ * @param obj
+ * @param application
+ * @returns {*}
+ */
+&nbsp;
+<span class="fstat-no" title="function not covered" >function getInfo(obj) {</span>
+    /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >    var cache = [];</span>
+<span class="cstat-no" title="statement not covered" >    return JSON.parse(JSON.stringify(obj, <span class="fstat-no" title="function not covered" >function (key,value) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (typeof value === 'object' &amp;&amp; value !== null) {</span>
+<span class="cstat-no" title="statement not covered" >            if (cache.indexOf(value) !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >                return {};</span>
+            }
+<span class="cstat-no" title="statement not covered" >            cache.push(value);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return value;</span>
+    }), <span class="fstat-no" title="function not covered" >function (key, value) {</span>
+<span class="cstat-no" title="statement not covered" >        if (_.isEmpty(value) &amp;&amp; !_.isNumber(value) &amp;&amp; !_.isBoolean(value)) {</span>
+<span class="cstat-no" title="statement not covered" >            return</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return value</span>
+        }
+    });
+<span class="cstat-no" title="statement not covered" >    cache = null;</span>
+}
+&nbsp;
+module.exports = SystemManager;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Dec 04 2015 18:19:41 GMT+0700 (ICT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

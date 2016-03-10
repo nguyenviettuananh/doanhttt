@@ -1,0 +1,1467 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for libs/global_function.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">libs/</a> global_function.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">19.9% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>41/206</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.77% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>32/104</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">23.81% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20.2% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>41/203</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">30 statements, 5 functions, 32 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+const _ = require('lodash'),
+    glob = require('glob'),
+    fs = require('fs'),
+    fsEx = require('fs-extra'),
+    path = require('path'),
+    logger = require('./logger'),
+    nunjucks = require('nunjucks');
+&nbsp;
+&nbsp;
+/**
+ * Create Environment to handles templates
+ * @param {array} views - List of loaders
+ * @returns {object}
+ */
+exports.createNewEnv = <span class="fstat-no" title="function not covered" >function (views, viewEngineConfig, application) {</span>
+<span class="cstat-no" title="statement not covered" >    let self = this;</span>
+<span class="cstat-no" title="statement not covered" >    let env = new nunjucks.Environment(new nunjucks.FileSystemLoader(views), viewEngineConfig);</span>
+<span class="cstat-no" title="statement not covered" >    let viewSetting = application.getConfig();</span>
+<span class="cstat-no" title="statement not covered" >    env = self.getAllFunction(env, viewSetting, application);</span>
+<span class="cstat-no" title="statement not covered" >    env = self.getAllCustomFilter(env, viewSetting, application);</span>
+<span class="cstat-no" title="statement not covered" >    env = self.getAllVariable(env, viewSetting, application);</span>
+<span class="cstat-no" title="statement not covered" >    env = self.getAllExtensions(env, viewSetting, application);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return env;</span>
+};
+&nbsp;
+/**
+ * Add function to Environment
+ * @param {object} env - Environment to add custom filter
+ * @returns {object}
+ */
+&nbsp;
+exports.getAllVariable = <span class="fstat-no" title="function not covered" >function (env, viewSetting, app) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!viewSetting.variableFile) <span class="cstat-no" title="statement not covered" >return env;</span></span>
+<span class="cstat-no" title="statement not covered" >    let userVariable;</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        userVariable = require(path.normalize(__base + viewSetting.variableFile));</span>
+    } catch (err) {
+        /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >        logger.warn('Cant find file :' + path.normalize(__base + viewSetting.variableFile))</span>
+    }
+<span class="cstat-no" title="statement not covered" >    let baseVariable = require(path.resolve(__dirname, '..', 'templateExtends/variable.js'));</span>
+&nbsp;
+    /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >    Object.keys(baseVariable).map(<span class="fstat-skip" title="function not covered" >function (name) {</span></span>
+<span class="cstat-skip" title="statement not covered" >        if (typeof baseVariable[name] !== "function") {</span>
+<span class="cstat-skip" title="statement not covered" >            env.addGlobal(name, baseVariable[name]);</span>
+        }
+    });
+    /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >    if (typeof userVariable === 'object' &amp;&amp; !_.isEmpty(userVariable)) {</span>
+<span class="cstat-no" title="statement not covered" >        Object.keys(userVariable).map(<span class="fstat-no" title="function not covered" >function (name) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (typeof userVariable[name] !== "function") {</span>
+<span class="cstat-no" title="statement not covered" >                env.addGlobal(name, userVariable[name]);</span>
+            }
+        })
+    }
+<span class="cstat-no" title="statement not covered" >    return env</span>
+};
+&nbsp;
+&nbsp;
+/**
+ * Add function to Environment
+ * @param {object} env - Environment to add custom filter
+ * @returns {object}
+ */
+&nbsp;
+exports.getAllExtensions = <span class="fstat-no" title="function not covered" >function (env, viewSetting, app) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="cstat-no" title="statement not covered" >    let basePath = path.resolve(__dirname, '..', 'templateExtends/extensions');</span>
+<span class="cstat-no" title="statement not covered" >    let baseFunctionLinks = self.getGlobbedFiles(path.normalize(basePath + "/*.js"));</span>
+&nbsp;
+    /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >    baseFunctionLinks.map(<span class="fstat-skip" title="function not covered" >function (link) {</span></span>
+<span class="cstat-skip" title="statement not covered" >        let viewExtension = require(link);</span>
+<span class="cstat-skip" title="statement not covered" >        let extensionName = path.basename(link, ".js");</span>
+<span class="cstat-skip" title="statement not covered" >        env.addExtension(extensionName, new viewExtension());</span>
+&nbsp;
+    });
+<span class="cstat-no" title="statement not covered" >    return env</span>
+};
+/**
+ * Add function to Environment
+ * @param {object} env - Environment to add custom filter
+ * @returns {object}
+ */
+&nbsp;
+exports.getAllFunction = <span class="fstat-no" title="function not covered" >function (env, viewSetting, app) {</span>
+<span class="cstat-no" title="statement not covered" >    let self = this;</span>
+<span class="cstat-no" title="statement not covered" >    let basePath = path.resolve(__dirname, '..', 'templateExtends/function');</span>
+<span class="cstat-no" title="statement not covered" >    let baseFunctionLinks = self.getGlobbedFiles(path.normalize(basePath + "/*.js"));</span>
+<span class="cstat-no" title="statement not covered" >    baseFunctionLinks.map(<span class="fstat-no" title="function not covered" >function (link) {</span></span>
+<span class="cstat-no" title="statement not covered" >        let viewFunction = require(link);</span>
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (typeof viewFunction === 'object' &amp;&amp; !_.isEmpty(viewFunction)) {</span>
+<span class="cstat-no" title="statement not covered" >            let name = path.basename(link, ".js");</span>
+<span class="cstat-no" title="statement not covered" >            let func = require(link);</span>
+            /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >            if (typeof func === 'object' &amp;&amp; !_.isEmpty(func)) {</span>
+<span class="cstat-no" title="statement not covered" >                func.name = func.name || name;</span>
+                /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >                if (func.handler) {</span>
+<span class="cstat-no" title="statement not covered" >                    func.async = func.async || false;</span>
+<span class="cstat-no" title="statement not covered" >                    func.handler = func.handler.bind(app);</span>
+&nbsp;
+                    /* istanbul ignore if */
+<span class="cstat-no" title="statement not covered" >                    if (func.async) {</span>
+<span class="cstat-skip" title="statement not covered" >                        env.addGlobal(func.name, <span class="fstat-skip" title="function not covered" >function () {</span></span>
+<span class="cstat-skip" title="statement not covered" >                            var argsAsArray = Array.prototype.slice.call(arguments);</span>
+<span class="cstat-skip" title="statement not covered" >                            return func.handler.bind.apply(func.handler, [null].concat(argsAsArray))</span>
+                        })
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        env.addGlobal(func.name, func.handler);</span>
+                    }
+                }
+            }
+        }
+    });
+<span class="cstat-no" title="statement not covered" >    if (!viewSetting.functionFolder) <span class="cstat-no" title="statement not covered" >return env;</span></span>
+<span class="cstat-no" title="statement not covered" >    let functionLinks = self.getGlobbedFiles(path.normalize(__base + viewSetting.functionFolder + "/*.js"));</span>
+<span class="cstat-no" title="statement not covered" >    functionLinks.map(<span class="fstat-no" title="function not covered" >function (link) {</span></span>
+<span class="cstat-no" title="statement not covered" >        let viewFunction = require(link);</span>
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (typeof viewFunction === 'object' &amp;&amp; !_.isEmpty(viewFunction)) {</span>
+<span class="cstat-no" title="statement not covered" >            let name = path.basename(link, ".js");</span>
+<span class="cstat-no" title="statement not covered" >            let func = require(link);</span>
+            /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >            if (typeof func === 'object' &amp;&amp; !_.isEmpty(func)) {</span>
+<span class="cstat-no" title="statement not covered" >                func.name = func.name || name;</span>
+                /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >                if (func.handler) {</span>
+<span class="cstat-no" title="statement not covered" >                    func.async = func.async || false;</span>
+<span class="cstat-no" title="statement not covered" >                    func.handler = func.handler.bind(app);</span>
+<span class="cstat-no" title="statement not covered" >                    if (func.async) {</span>
+<span class="cstat-no" title="statement not covered" >                        env.addGlobal(func.name, <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                            var argsAsArray = Array.prototype.slice.call(arguments);</span>
+<span class="cstat-no" title="statement not covered" >                            return func.handler.bind.apply(func.handler, [null].concat(argsAsArray))</span>
+                        })
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        env.addGlobal(func.name, func.handler);</span>
+                    }
+                }
+            }
+        }
+    });
+<span class="cstat-no" title="statement not covered" >    return env</span>
+};
+&nbsp;
+/**
+ * Add custom filter to Environment
+ * @param {object} env - Environment to add custom filter
+ * @returns {object}
+ */
+exports.getAllCustomFilter = <span class="fstat-no" title="function not covered" >function (env, viewSetting, app) {</span>
+<span class="cstat-no" title="statement not covered" >    let self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let basePath = path.resolve(__dirname, '..', 'templateExtends/filter');</span>
+<span class="cstat-no" title="statement not covered" >    let baseFilterLinks = self.getGlobbedFiles(path.normalize(basePath + "/*.js"));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    baseFilterLinks.map(<span class="fstat-no" title="function not covered" >function (link) {</span></span>
+<span class="cstat-no" title="statement not covered" >        let name = path.basename(link, ".js")</span>
+<span class="cstat-no" title="statement not covered" >        let filter = require(link);</span>
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (typeof filter === 'object' &amp;&amp; !_.isEmpty(filter)) {</span>
+<span class="cstat-no" title="statement not covered" >            filter.name = filter.name || name;</span>
+&nbsp;
+            /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >            if (filter.handler) {</span>
+<span class="cstat-no" title="statement not covered" >                filter.handler = filter.handler.bind(app);</span>
+<span class="cstat-no" title="statement not covered" >                filter.async = filter.async || false;</span>
+<span class="cstat-no" title="statement not covered" >                if (filter.async) {</span>
+<span class="cstat-no" title="statement not covered" >                    env.addFilter(filter.name, filter.handler, true)</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    env.addFilter(filter.name, filter.handler)</span>
+                }
+            }
+        }
+    });
+<span class="cstat-no" title="statement not covered" >    if (!viewSetting.filterFolder) <span class="cstat-no" title="statement not covered" >return env;</span></span>
+<span class="cstat-no" title="statement not covered" >    let filterLinks = self.getGlobbedFiles(path.normalize(__base + viewSetting.filterFolder + "/*.js"));</span>
+<span class="cstat-no" title="statement not covered" >    filterLinks.map(<span class="fstat-no" title="function not covered" >function (link) {</span></span>
+<span class="cstat-no" title="statement not covered" >        let name = path.basename(link, ".js");</span>
+<span class="cstat-no" title="statement not covered" >        let filter = require(link);</span>
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (typeof filter === 'object' &amp;&amp; !_.isEmpty(filter)) {</span>
+<span class="cstat-no" title="statement not covered" >            filter.name = filter.name || name;</span>
+&nbsp;
+            /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >            if (filter.handler) {</span>
+<span class="cstat-no" title="statement not covered" >                filter.handler = filter.handler.bind(app);</span>
+<span class="cstat-no" title="statement not covered" >                filter.async = filter.async || false;</span>
+<span class="cstat-no" title="statement not covered" >                if (filter.async) {</span>
+<span class="cstat-no" title="statement not covered" >                    env.addFilter(filter.name, filter.handler, true)</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    env.addFilter(filter.name, filter.handler)</span>
+                }
+            }
+        }
+    });
+<span class="cstat-no" title="statement not covered" >    return env</span>
+};
+&nbsp;
+&nbsp;
+///**
+// * Send mail with provided options
+// * @param {object} mailOptions
+// * @returns {Promise}
+// */
+//exports.sendMail = function (mailOptions) {
+//    return new Promise(function (fulfill, reject) {
+//        __mailSender.sendMail(mailOptions, function (err, info) {
+//
+//            if (err) {
+//                reject(err);
+//            } else {
+//                fulfill(info);
+//            }
+//        });
+//    });
+//};
+&nbsp;
+/**
+ * Get files by glob patterns
+ */
+module.exports.getGlobbedFiles = <span class="fstat-no" title="function not covered" >function (globPatterns, removeRoot) {</span>
+    // For context switching
+<span class="cstat-no" title="statement not covered" >    let _this = this;</span>
+&nbsp;
+    // URL paths regex
+<span class="cstat-no" title="statement not covered" >    let urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');</span>
+&nbsp;
+    // The output array
+<span class="cstat-no" title="statement not covered" >    let output = [];</span>
+&nbsp;
+    // If glob pattern is array so we use each pattern in a recursive way, otherwise we use glob
+&nbsp;
+    /* istanbul ignore if */
+<span class="cstat-no" title="statement not covered" >    if (_.isArray(globPatterns)) {</span>
+<span class="cstat-skip" title="statement not covered" >        globPatterns.forEach(<span class="fstat-skip" title="function not covered" >function (globPattern) {</span></span>
+<span class="cstat-skip" title="statement not covered" >            output = _.union(output, _this.getGlobbedFiles(globPattern, removeRoot));</span>
+        });
+&nbsp;
+        /* istanbul ignore else */
+    } else <span class="cstat-no" title="statement not covered" >if (_.isString(globPatterns)) {</span>
+&nbsp;
+        /* istanbul ignore if */
+<span class="cstat-no" title="statement not covered" >        if (urlRegex.test(globPatterns)) {</span>
+<span class="cstat-skip" title="statement not covered" >            output.push(globPatterns);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            var files = glob.sync(globPatterns);</span>
+&nbsp;
+            /* istanbul ignore if */
+<span class="cstat-no" title="statement not covered" >            if (removeRoot) {</span>
+<span class="cstat-skip" title="statement not covered" >                files = files.map(<span class="fstat-skip" title="function not covered" >function (file) {</span></span>
+<span class="cstat-skip" title="statement not covered" >                    return file.replace(removeRoot, '');</span>
+                })
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            output = _.union(output, files);</span>
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return output;</span>
+};
+&nbsp;
+/**
+ * Scan folder config and read all configuration file. If configuration file does not exists then copy default
+ * configuration file from Arrowjs module to folder config
+ */
+&nbsp;
+module.exports.getRawConfig = <span class="fstat-no" title="function not covered" >function getRawConfig() {</span>
+<span class="cstat-no" title="statement not covered" >    let conf = {};</span>
+&nbsp;
+    //get config.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/config.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/config'));</span>
+    } catch (err) {
+&nbsp;
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/config.js'), __base + 'config/config.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/config'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get websocket.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/websocket.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/websocket'));</span>
+    } catch (err) {
+&nbsp;
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/websocket.js'), __base + 'config/websocket.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/websocket'));</span>
+        } else {
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get error.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/error.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/error'));</span>
+    } catch (err) {
+&nbsp;
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/error.js'), __base + 'config/error.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/error'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get redis.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/redis.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/redis'));</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/redis.js'), __base + 'config/redis.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/redis'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get view.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/view.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/view'));</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/view.js'), __base + 'config/view.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/view'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get session.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/session.js');</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/session.js'), __base + 'config/session.js');</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get express.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/express.js');</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/express.js'), __base + 'config/express.js');</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get passport.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/passport.js');</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/passport.js'), __base + 'config/passport.js');</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //get database.js
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/database.js');</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/database'));</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/database.js'), __base + 'config/database.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(conf, require(__base + 'config/database'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+    //setup strategy
+<span class="cstat-no" title="statement not covered" >    createDirectory('config/strategies');</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/strategies/local.js');</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/strategies/local.js'), __base + 'config/strategies/local.js');</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+&nbsp;
+&nbsp;
+    //get ENV config
+    /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >    let env = process.env.NODE_ENV || "development";</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/env/' + env + ".js");</span>
+<span class="cstat-no" title="statement not covered" >        _.assign(conf, require(__base + 'config/env/' + env));</span>
+    } catch (err) {
+&nbsp;
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/env/development.js'), __base + 'config/env/' + env + '.js');</span>
+<span class="cstat-no" title="statement not covered" >            conf = _.merge(conf, require(__base + 'config/env/' + env));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+    }
+<span class="cstat-no" title="statement not covered" >    return conf</span>
+};
+/**
+ * Read file config/structure.js and return structure object
+ */
+module.exports.getStructure = <span class="fstat-no" title="function not covered" >function getStructure() {</span>
+<span class="cstat-no" title="statement not covered" >    let structure = {};</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        fs.accessSync(__base + 'config/structure.js');</span>
+&nbsp;
+        /* istanbul ignore next */
+<span class="cstat-skip" title="statement not covered" >        _.assign(structure, require(__base + 'config/structure'));</span>
+    } catch (err) {
+        /* istanbul ignore else */
+<span class="cstat-no" title="statement not covered" >        if (err.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >            fsEx.copySync(path.resolve(__dirname, '..', 'config/structure.js'), __base + 'config/structure.js');</span>
+<span class="cstat-no" title="statement not covered" >            _.assign(structure, require(__base + 'config/structure'));</span>
+        } else {
+<span class="cstat-skip" title="statement not covered" >            throw err</span>
+        }
+&nbsp;
+    }
+<span class="cstat-no" title="statement not covered" >    return structure;</span>
+};
+&nbsp;
+/**
+ * Create directory
+ * @param {string} path
+ * return {void}
+ */
+&nbsp;
+<span class="fstat-no" title="function not covered" >function createDirectory(path) {</span>
+<span class="cstat-no" title="statement not covered" >    fs.mkdir(__base + path, <span class="fstat-no" title="function not covered" >function (err) {</span></span>
+        //if (err == null) console.log('Create directory ' + path);
+    });
+};
+&nbsp;
+exports.createDirectory = createDirectory</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Dec 04 2015 18:13:27 GMT+0700 (ICT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

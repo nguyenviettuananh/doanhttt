@@ -1,0 +1,375 @@
+{% extends '_layout.' + getConfig('viewExtension') %}
+
+{% block cssExtends %}
+    <link href="/backend/adminLTE/assets/plugins/lepture-markdown/editor.css" rel="stylesheet">
+    <link href="/backend/adminLTE/dist/css/monokai_sublime.css" rel="stylesheet">
+
+    <style>
+        #tblscore tr td {
+            padding: 5px;
+        }
+
+        .a-answer {
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            font-size: 16px;
+        }
+
+        .CodeMirror {
+            height: 250px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form id="edit-form" method="POST">
+        {{ toolbar | safe }}
+
+        <div class=" box box-solid box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12" id="alert_placeholder"></div>
+                    <div class="col-md-9 col-sm-9">
+                        <div class="form-group">
+                            <label for="title">Tiêu đề (hiển thị trong danh sách Quiz)</label>
+                            <input value="{{ quiz.title }}" maxlength="255" class="form-control" name="title" id="title"
+                                   type="text"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="question_markdown">Nội dung câu hỏi </label><span class="required"> *</span>
+                            <textarea class="form-control" name="question_markdown" id="question_markdown" rows="10"
+                                      cols="20">{{ quiz.question_markdown }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Loại câu hỏi</label>
+                            <select id="type" name="type" class="form-control">
+                                <option value="0" {{ "selected" if quiz.type==0 else "" }}>Chọn một đáp án</option>
+                                <option value="1" {{ "selected" if quiz.type==1 else "" }}>Chọn nhiều đáp án</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Đáp án</label>
+
+                                    <div id="answer-alert"></div>
+                                </div>
+                                <div id="lstans">
+                                    {% if quiz.quiz_answers %}
+                                        {% set input_type = "checkbox" if quiz.type==1 else "radio" %}
+                                        {% for a in quiz.quiz_answers %}
+                                            <div class="col-md-12 a-answer">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <input type="{{ input_type }}" name="correct"
+                                                               class="correct hasTooltip"
+                                                               data-toggle="tooltip"
+                                                               data-placement="top"
+                                                               value="{{ loop.index0 }}"
+                                                               title="Đúng/Sai"
+                                                                {{ "checked" if a.status else "" }}/>
+                                                    </div>
+                                                    <input type="text" name="answer_text" class="form-control answer"
+                                                           value="{{ a.answer_text }}">
+
+                                                    <div class="input-group-btn">
+                                                        <button type="button" id="{{ a.id }}"
+                                                                class="btn btn-danger btn-delete-answer hasTooltip">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button id="addAnswer" type="button" class="btn btn-primary">Add</button>
+                                </div>
+                                <input id="new" onkeypress="handle(event);" type="text" class="form-control"
+                                       placeholder="Add new option">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="id_categories">Danh mục câu hỏi</label>
+
+                            <select multiple="multiple" name="id_categories" id="id_categories"
+                                    class="form-control">
+                                {% for category in categories %}
+                                    <option {% if quiz.categories and category.id in quiz.categories %}selected="selected"{% endif %}
+                                            value="{{ category.id }}">
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+
+                            <input type="hidden" name="categories" id="categories"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-toggle="tooltip" data-placement="top"
+                                   title="Cho phép người dùng khác sử dụng câu hỏi này" for="share">Chia sẻ &nbsp;</label>
+                            <input id="share" name="share" type="checkbox"
+                                   value="true" {{ "checked" if quiz.share == true else "" }}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block jsExtends %}
+    {% include '_editorScript.' + getConfig('viewExtension') %}
+    <script src="/backend/adminLTE/assets/plugins/lepture-markdown/editor.js"></script>
+    <script src="/backend/adminLTE/assets/plugins/lepture-markdown/marked.js"></script>
+    <script src="/backend/adminLTE/assets/plugins/highlight-pack/highlight.pack.js"></script>
+    <script>
+        var correctVal = -1;
+        var form = $('#edit-form');
+        var question_type = $('#type');
+        var newAnswer = $('#new');
+
+        // Render markdown editor
+        var editor = new Editor({
+            element: document.getElementById('markdown'),
+            tools: true
+        });
+        editor.render();
+
+        $(function () {
+            // Init select2
+            var select2 = $('#id_categories');
+            select2.select2({
+                placeholder: "Chọn danh mục",
+                templateSelection: function (option) {
+                    var text = $(option.element).text().trim();
+                    text = text.replace(/^[—]+/, '');
+                    return text;
+                }
+            });
+
+            var cat_id = '{{ quiz.categories }}';
+            cat_id = cat_id.split(':');
+            cat_id.shift();
+            cat_id.pop(cat_id[cat_id.length - 1]);
+            select2.val(cat_id).trigger('change');
+        });
+
+        // Change type of answer when type of question change
+        question_type.change(function () {
+            var input = $('input.correct');
+            var ansLst = [],
+                    idLst = [];
+            input.each(function () {
+                ansLst.push($(this).parent().next('input.answer').val().replace(/\"/g, '&quot;'));
+            });
+
+            var btn = $('.btn-delete-answer');
+            btn.each(function () {
+                idLst.push($(this).attr('id'));
+            });
+
+            var list = $('#lstans');
+            list.html('');
+
+            var input_type;
+
+            if (question_type.val() == 0) input_type = 'radio';
+            else if (question_type.val() == 1) input_type = 'checkbox';
+            else input_type = 'text';
+            ansLst.forEach(function (value, index) {
+                appendAnswer(input_type, index, value, idLst[index])
+            })
+        });
+
+        function deleteRecords() {
+            var ids = [];
+            ids.push({{ quiz.id }});
+            $.ajax({
+                url: '{{ baseRoute }}',
+                type: 'DELETE',
+                data: {
+                    ids: ids.join()
+                },
+                success: function () {
+                    window.location.href = '{{ baseRoute }}';
+                }
+            });
+        }
+
+        function warning (message) {
+            $('#alert_placeholder').html('<div class="alert alert-warning alert-dismissable">' +
+            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+            '<span><i class="icon fa fa-warning"></i> ' + message + '</span></div>')
+        }
+
+        function addAnswer() {
+            correctVal++;
+
+            if (!question_type.val()) {
+                warning('Chưa chọn loại câu hỏi');
+                return false;
+            }
+
+            var input_type;
+            if (question_type.val() == 0) input_type = 'radio';
+            else if (question_type.val() == 1) input_type = 'checkbox';
+            else input_type = 'text';
+
+            // replace double quote in newVal with &quot;
+            var val = newAnswer.val().replace(/\"/g, '&quot;');
+            appendAnswer(input_type, correctVal, val);
+            newAnswer.val('');
+        }
+
+        function appendAnswer(input_type, correctVal, val, button_id) {
+            button_id = (button_id != undefined) ? 'id="' + button_id + '"' : '';
+            $('#lstans').append(
+                    '<div class="col-md-12 a-answer">' +
+                    '<div class="input-group">' +
+                    '<div class="input-group-addon">' +
+                    '<input type="' + input_type + '" name="correct" value="' + correctVal + '" class="correct hasTooltip"' +
+                    ' data-toggle="tooltip" data-placement = "top" title = "Đúng/Sai" / >' +
+                    '</div>' +
+                    '<input type="text" name="answer_text" class="form-control answer" style = "font-size: 16px;" value="' + val + '" >' +
+                    '<div class="input-group-btn"><button ' + button_id + ' type="button" class="btn btn-danger btn-delete-answer hasTooltip" > ' +
+                    '<i class="fa fa-trash" > </i > ' +
+                    '</button >' +
+                    '</div >' +
+                    '</div >' +
+                    '</div >'
+            )
+        }
+
+        function handle(event) {
+            if (event.which === 13 || event.charCode === 13 || event.keyCode === 13) {
+                addAnswer();
+                event.preventDefault();
+            }
+        }
+
+        $('#addAnswer').click(function () {
+            if (newAnswer.val() != '') addAnswer();
+        });
+
+        form.validate({
+            rules: {
+                question_markdown: {
+                    required: true
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+        form.submit(function () {
+            var ret = true;
+
+            if (editor.value().trim().length <= 5) {
+                warning('Vui lòng nhập câu hỏi - Yêu cầu lớn hơn 5 ký tự');
+                return false;
+            }
+
+            if ($('.answer').length < 2 && question_type.val() != 2) {
+                warning('Cần ít nhất hai đáp án');
+                return false;
+            }
+            $('.answer').each(function () {
+                if ($(this).val() == '') {
+                    warning('Câu trả lời không được để trống');
+                    ret = false;
+                }
+            });
+
+            if (ret == false) return ret;
+
+            if ($("input.correct:checked").length < 1) {
+                    warning('Cần có ít nhất 1 đáp án đúng');
+                    return false;
+            } else {
+                $('#alert_placeholder').html('');
+                var md = editor.codemirror.getValue();
+                var parse = editor.constructor.markdown;
+                var html = parse(md);
+                var html_elem = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "question_html").val(html);
+                form.append($(html_elem));
+
+                // send quiz_answer ID if exist
+                var answer_ids = [];
+                $('.btn-delete-answer').each(function () {
+                    var id = $(this).attr('id');
+                    if (id != undefined) answer_ids.push(id);
+                });
+                if (answer_ids.length > 0) {
+                    var answer_ids_elem = $("<input>")
+                            .attr("type", "hidden")
+                            .attr("name", "answer_ids").val(answer_ids);
+                    form.append($(answer_ids_elem));
+                }
+            }
+
+            var listId = $('#id_categories').val();
+            if (listId) {
+                $('#categories').val(':' + listId.join(':') + ':');
+            }
+        });
+
+        $(document).on('click', '.btn-delete-answer', function () {
+            var n = $(".answer").length;
+
+            if (n > 2) {
+                correctVal--;
+
+                $(this).parent().parent().parent().remove();
+
+                var id = $(this).attr('id');
+                if (id) {
+                    $.ajax({
+                        url: '/admin/quiz/quiz-answer',
+                        type: 'DELETE',
+                        data: {
+                            id: id
+                        }
+                    }).done(function(){
+                        $('#answer-alert').html(
+                                '<div class="alert alert-success alert-dismissable">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                                '<i class="fa fa-check"></i> Xóa đáp án thành công' +
+                                '</div>'
+                        );
+                    });
+                }
+            } else {
+                warning('Cần tối thiểu 2 đáp án');
+            }
+        });
+    </script>
+{% endblock %}
